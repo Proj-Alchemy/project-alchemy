@@ -1,3 +1,5 @@
+from jinja2 import Template
+from jinja2 import UndefinedError
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -86,4 +88,12 @@ class DeviceConfigViewSet(ViewSet):
 
         device_data["interfaces"] = interfaces
 
-        return Response(device_data)
+        template_data = device.vendor.templatefragment_set.first()
+
+        try:
+            template = Template(template_data.template_text)
+            device_config = template.render({"device": device_data})
+        except UndefinedError as e:
+            device_config = repr(e)
+
+        return Response({"vars": device_data, "config": device_config})

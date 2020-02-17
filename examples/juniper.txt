@@ -1,0 +1,119 @@
+system {
+    host-name ;
+    domain-name None;
+    root-authentication {
+        (encrypted-password "ROOTPASSWORD" | public-key);
+        ssh-dsa "public-key";
+        ssh-ecdsa "public-key";
+        ssh-rsa "public-key";
+    } 
+    name-server {
+        8.8.8.8;
+        1.1.1.1;
+    login {
+        user {  
+            nick {
+                uid ;
+                class super-user;
+                authentication {
+                    (encrypted-password "nick1234" | public-key);
+                }
+            }  
+        }
+    }
+
+    services {
+        ssh;
+        telnet;
+        xnm-clear-text;
+        web-management {
+            https {
+                system-generated-certificate;
+            }
+        }
+    }
+
+    syslog {
+        archive size 100k files 3;
+        user * any emergency;
+        file messages {
+                any critical;
+                authorization info;
+        }
+        file interactive-commands {
+                interactive-commands any;
+        }
+    }
+    max-configurations-on-flash 5;
+    max-configuration-rollbacks 5;
+}
+
+
+security {
+    screen {
+        ids-option untrust-screen {
+            icmp {
+                ping-death;
+            }
+            ip {
+                source-route-option;
+                tear-drop;
+            }
+            tcp {
+                syn-flood {
+                    alarm-threshold 1024;
+                    attack-threshold 200;
+                    source-threshold 1024;
+                    destination-threshold 2048;
+                    timeout 20;
+                }
+                land;
+            }
+        }
+    }
+    policies {
+        from-zone trust to-zone trust {
+            policy trust-to-trust {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone trust to-zone untrust {
+            policy trust-to-untrust {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+    }
+}
+
+interface { 
+    interface xe-0/0/1 {
+        unit 0 {
+            family inet {
+                ip address 10.0.0.2/31
+                ipv6 address 2000:2::1/64
+            }
+        }
+    }  
+    interface xe-0/0/0 {
+        unit 0 {
+            family inet {
+                ip address 10.0.0.1/31
+                ipv6 address 2000:1::2/64
+            }
+        }
+    }  
+}

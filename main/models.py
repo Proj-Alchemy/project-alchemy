@@ -44,6 +44,7 @@ class Device(BaseModel):
     snmp_community = models.CharField(max_length=20)
     loopbackv4 = models.GenericIPAddressField(null=True, blank=True)
     loopbackv6 = models.GenericIPAddressField(null=True, blank=True)
+    domain = models.CharField(max_length=100, blank=True, null=True)
 
 
 class DeviceLink(BaseModel):

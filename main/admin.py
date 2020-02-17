@@ -5,6 +5,7 @@ from .models import Device
 from .models import DeviceLink
 from .models import DeviceUser
 from .models import ManagementAddress
+from .models import TemplateFragment
 from .models import User
 from .models import Vendor
 
@@ -15,29 +16,10 @@ class BaseAdmin(admin.ModelAdmin):
         super(BaseAdmin, self).__init__(model, admin_site)
 
 
-class DeviceAdmin(BaseAdmin):
-    pass
-
-
-class VendorAdmin(BaseAdmin):
-    pass
-
-
-class DeviceLinkAdmin(BaseAdmin):
-    pass
-
-
-class DeviceUserAdmin(BaseAdmin):
-    pass
-
-
-class ManagementAddressAdmin(BaseAdmin):
-    pass
-
-
 admin.site.register(User, UserAdmin)
-admin.site.register(Vendor, VendorAdmin)
-admin.site.register(Device, DeviceAdmin)
-admin.site.register(DeviceLink, DeviceLinkAdmin)
-admin.site.register(DeviceUser, DeviceUserAdmin)
-admin.site.register(ManagementAddress, ManagementAddressAdmin)
+admin.site.register(Vendor)
+admin.site.register(Device)
+admin.site.register(DeviceLink)
+admin.site.register(DeviceUser)
+admin.site.register(ManagementAddress)
+admin.site.register(TemplateFragment)
