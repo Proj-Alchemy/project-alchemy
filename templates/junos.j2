@@ -1,52 +1,51 @@
 system {
-	host-name {{ device.hostname }};
-	domain-name {{ device.domain }};
-	root-authentication {
-		(encrypted-password "ROOTPASSWORD" | public-key);
-		ssh-dsa "public-key";
-		ssh-ecdsa "public-key";
-		ssh-rsa "public-key";
-	} 
-	name-server {
-		NAMESERVER;
-	login {
-		user {
-  {% for user in device.users %}
-			{{ user.name }} {
-				uid 2001;
-				class super-user;
-				authentication {
-					(encrypted-password "{{ user.password }}" | public-key);
-				}
-			}
-  {% endfor %}
-		}
-	}
+    host-name {{ device.hostname }};
+    domain-name DOMAINNAME;
+    root-authentication {
+        (encrypted-password "ROOTPASSWORD" | public-key);
+        ssh-dsa "public-key";
+        ssh-ecdsa "public-key";
+        ssh-rsa "public-key";
+    } 
+    name-server {
+        8.8.8.8;
+        1.1.1.1;
+    login {
+        user {  {% for user in device.users %}
+            {{ user.name }} {
+                uid {{ user.uid }};
+                class super-user;
+                authentication {
+                    (encrypted-password "{{ user.password }}" | public-key);
+                }
+            }  {% endfor %}
+        }
+    }
 
-	services {
-		ssh;
-		telnet;
-		xnm-clear-text;
-		web-management {
-			https {
-				system-generated-certificate;
-			}
-		}
-	}
+    services {
+        ssh;
+        telnet;
+        xnm-clear-text;
+        web-management {
+            https {
+                system-generated-certificate;
+            }
+        }
+    }
 
-	syslog {
-		archive size 100k files 3;
-		user * any emergency;
-		file messages {
-				any critical;
-				authorization info;
-		}
-		file interactive-commands {
-				interactive-commands any;
-		}
-	}
-	max-configurations-on-flash 5;
-	max-configuration-rollbacks 5;
+    syslog {
+        archive size 100k files 3;
+        user * any emergency;
+        file messages {
+                any critical;
+                authorization info;
+        }
+        file interactive-commands {
+                interactive-commands any;
+        }
+    }
+    max-configurations-on-flash 5;
+    max-configuration-rollbacks 5;
 }
 
 
@@ -72,19 +71,43 @@ security {
             }
         }
     }
+    policies {
+        from-zone trust to-zone trust {
+            policy trust-to-trust {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+        from-zone trust to-zone untrust {
+            policy trust-to-untrust {
+                match {
+                    source-address any;
+                    destination-address any;
+                    application any;
+                }
+                then {
+                    permit;
+                }
+            }
+        }
+    }
 }
 
-interface {
-	{% for interface in device.interfaces %}
-	interface {{ interface.name }} {
-		unit 0 {
-			family inet {
-				ip address {{ interface.ipv4 }}/31
-				ipv6 address {{ interface.ipv6 }}/64
-			}
-		}
-	}
-	{% endfor %}
+interface { {% for interface in device.interfaces %}
+    interface {{ interface.name }} {
+        unit 0 {
+            family inet {
+                ip address {{ interface.ipv4 }}/31
+                ipv6 address {{ interface.ipv6 }}/64
+            }
+        }
+    }  {% endfor %}
 }
 
 

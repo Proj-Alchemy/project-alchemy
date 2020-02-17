@@ -1,2 +1,16 @@
 ---
-HOSTNAME: AWESOME_HOSTNAME
+device:
+    hostname: AWESOME_HOSTNAME
+    
+    users:
+        - name: apple
+          uid: 2001
+          password: awesomepassword
+        - name: banana
+          uid: 2002
+          password: otherawesomepassword
+    
+    interfaces:
+        - name: gi-0/0/0/0
+          ipv4: 10.0.0.1
+          ipv6: 10:10:10:10::1
