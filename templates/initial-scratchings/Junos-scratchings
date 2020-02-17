@@ -1,12 +1,12 @@
 system {
-	host-name HOSTNAME;
+	host-name {{HOSTNAME}};
 	domain-name DOMAIN.NAME;
 	root-authentication {
 		(encrypted-password "password" | public-key);
 		ssh-dsa "public-key";
 		ssh-ecdsa "public-key";
 		ssh-rsa "public-key";
-	}
+	} 
 	name-server {
 		address;
 	login {
@@ -20,7 +20,7 @@ system {
 			}
 		}
 	}
-	
+
 	services {
 		ssh;
 		telnet;
@@ -39,7 +39,7 @@ system {
 			}
 		}
 	}
-	
+
 	syslog {
 		archive size 100k files 3;
 		user * any emergency;
@@ -53,8 +53,8 @@ system {
 	}
 	max-configurations-on-flash 5;
 	max-configuration-rollbacks 5;
-}	
-	
+}
+
 security {
     screen {
         ids-option untrust-screen {
@@ -100,12 +100,12 @@ security {
 			}
 			rule-set PORT_MAPS {
 				from interface pp0.0
-				 rule HTTPS { 
+				 rule HTTPS {
 					match destination-address 0.0.0.0/0;
 					match destination-port 443;
 					then destination-nat pool miniserver;
 				 }
-				 rule SMTP { 
+				 rule SMTP {
 					match destination-address 0.0.0.0/0;
 					match destination-port 25;
 					then destination-nat pool miniserver;
@@ -176,5 +176,4 @@ security {
             }
         }
     }
-} 
-	
+}
