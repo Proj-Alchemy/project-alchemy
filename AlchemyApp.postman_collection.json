@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "List Devices",
+			"name": "Get Devices",
 			"event": [
 				{
 					"listen": "test",
@@ -22,36 +22,204 @@
 				}
 			],
 			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "{{pwd}}",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "{{user}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{serverIP}}:{{port}}/device",
-					"protocol": "http",
+					"raw": "{{serverIP}}/device",
 					"host": [
 						"{{serverIP}}"
 					],
-					"port": "{{port}}",
 					"path": [
 						"device"
 					]
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Vendor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5ce2ff82-2ee7-4b35-ba71-deb5619255a6",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverIP}}/vendor",
+					"host": [
+						"{{serverIP}}"
+					],
+					"path": [
+						"vendor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Template",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "20fdf979-da9c-4064-a40a-ec512cc09513",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverIP}}/template",
+					"host": [
+						"{{serverIP}}"
+					],
+					"path": [
+						"template"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Vendor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5ce2ff82-2ee7-4b35-ba71-deb5619255a6",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"vendorID\", jsonData.id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"CISCO123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{serverIP}}/vendor/",
+					"host": [
+						"{{serverIP}}"
+					],
+					"path": [
+						"vendor",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Device",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"awesome_device\",\n  \"snmp_community\": \"awesome_snmp\",\n  \"loopbackv4\": \"1.1.1.1\",\n  \"loopbackv6\": \"1::1\",\n  \"vendor\": \"{{vendorID}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{serverIP}}/device/",
+					"host": [
+						"{{serverIP}}"
+					],
+					"path": [
+						"device",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{pwd}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{user}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0c164885-d5e7-435d-ace9-ac536bf15a8a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "be60e50f-215d-4d69-a842-53da9174f3f2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
