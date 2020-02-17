@@ -1,0 +1,1 @@
+web: gunicorn project_alchemy.wsgi --log-file -
