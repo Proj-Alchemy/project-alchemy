@@ -27,9 +27,15 @@ ip domain-name {{ device.domain }}
 spanning-tree mode pvst
 !
 !
+interface loopback0
+    description loopback
+    ip address {{ loopbackv4 }} 255.255.255.255
+    ipv6 address {{ loopbackv6 }}/128
+    ip verify unicast source reachable-via any
 ! {% for interface in device.interfaces %}
 interface {{ interface.port }}
     description {{ interface.name }}
+    ip access-group Alchemy_list in
     ip address {{ interface.ipv4 }} 255.255.255.224
     ipv6 address {{ interface.ipv6 }}/64
      ip verify unicast source reachable-via any
@@ -45,25 +51,32 @@ ip classless
 ip flow-export version 9
 !
 !
-ip access-list extended alchemy_list  {% for manager in managementaddress %}
+ip access-list extended Alchemy_list  {% for manager in managementaddress %}
     description {{ manager.name }}
-    permit tcp host {{ manager.ip_address }} any eq telnet  {% endfor %}
-    deny tcp any any eq telnet
+    permit tcp host {{ manager.ip_address }} any eq ssh
+    deny tcp any any eq ssh
+    permit tcp host {{ manager.ip_address }} any eq snmp {% endfor %}
+    deny tcp any any eq snmp
     permit ip any any
 !
+ip access-list standard VTY_ACL {% for manager in managementaddress %}
+    description {{ manager.name }}
+    permit {{ manager.ip_address }} 0.0.0.4 {% endfor %}
 !
+!
+snmp-server community {{ snmp_community }} RO
 !
 line con 0
     password alchemy
     login
 !
-line aux 0
-!
 line vty 0 4
+    access-class VTY_ACL in
     password alchemy
     login
     transport input ssh
 line vty 5 15
+    access-class VTY_ACL in
     password alchemy
     login
     transport input ssh

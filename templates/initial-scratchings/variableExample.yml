@@ -1,12 +1,19 @@
 ---
+
+snmp_community: bananans
+
+loopbackv4: "1.1.1.1"
+loopbackv6: "fe80::2"
+
+
 managementaddress:
     - ip_address: 192.168.200.200
       name: test
 
 
 device:
-    hostname: AWESOME_HOSTNAME
-    domain: THE_BEST_DOMAIN
+    name: host1
+    domain: apnic.net
     
     users:
         - name: apple
