@@ -17,6 +17,7 @@ system {
                 class super-user;
                 authentication {
                     (encrypted-password "{{ user.password }}" | public-key);
+                    ssh-rsa "{{ user.public_key }}";
                 }
             }  {% endfor %}
         }
