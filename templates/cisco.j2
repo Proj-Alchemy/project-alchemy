@@ -25,6 +25,9 @@ spanning-tree mode pvst
 ! {% for interface in device.interfaces %}
 interface {{ interface.name }}
     ip address {{ interface.ipv4 }} 255.255.255.224
+    ipv6 address {{ interface,ipv6 }}/64
+     ip verify unicast source reachable-via any
+    no shutdown
 ! {% endfor %}
 !
 interface Vlan1
