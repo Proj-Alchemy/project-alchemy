@@ -25,7 +25,7 @@ spanning-tree mode pvst
 ! {% for interface in device.interfaces %}
 interface {{ interface.name }}
     ip address {{ interface.ipv4 }} 255.255.255.224
-    ipv6 address {{ interface,ipv6 }}/64
+    ipv6 address {{ interface.ipv6 }}/64
      ip verify unicast source reachable-via any
     no shutdown
 ! {% endfor %}
@@ -39,8 +39,8 @@ ip classless
 ip flow-export version 9
 !
 !
-ip access-list extended alchemy_list
-    permit tcp host 172.16.16.100 host 172.16.16.1 eq telnet
+ip access-list extended alchemy_list  {% for manager in management %}
+    permit tcp host {{ manager.ipv4 }} any eq telnet  {% endfor %}
     deny tcp any any eq telnet
     permit ip any any
 !

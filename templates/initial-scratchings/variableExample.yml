@@ -1,4 +1,7 @@
 ---
+management:
+    - ipv4: 192.168.200.200
+
 device:
     hostname: AWESOME_HOSTNAME
     domain: THE_BEST_DOMAIN
@@ -18,3 +21,4 @@ device:
         - name: gi-0/0/1
           ipv4: 10.1.0.1
           ipv6: 10:10:10:20::1
+          
