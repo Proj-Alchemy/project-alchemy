@@ -30,11 +30,20 @@ class TemplateFragment(BaseModel):
     template_text = models.TextField(default="", blank=True, null=True)
 
 
+class DeviceUser(BaseModel):
+    password = models.CharField(max_length=100)
+    public_key = models.TextField()
+
+
+class ManagementAddress(BaseModel):
+    ip_address = models.GenericIPAddressField()
+
+
 class Device(BaseModel):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     snmp_community = models.CharField(max_length=20)
-    loopbackv4_address = models.GenericIPAddressField(null=True, blank=True)
-    loopbackv6_address = models.GenericIPAddressField(null=True, blank=True)
+    loopbackv4 = models.GenericIPAddressField(null=True, blank=True)
+    loopbackv6 = models.GenericIPAddressField(null=True, blank=True)
 
 
 class DeviceLink(BaseModel):

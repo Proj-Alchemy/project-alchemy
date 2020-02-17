@@ -3,6 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 
 from .models import Device
 from .models import DeviceLink
+from .models import DeviceUser
+from .models import ManagementAddress
 from .models import User
 from .models import Vendor
 
@@ -25,7 +27,17 @@ class DeviceLinkAdmin(BaseAdmin):
     pass
 
 
+class DeviceUserAdmin(BaseAdmin):
+    pass
+
+
+class ManagementAddressAdmin(BaseAdmin):
+    pass
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(Vendor, VendorAdmin)
 admin.site.register(Device, DeviceAdmin)
 admin.site.register(DeviceLink, DeviceLinkAdmin)
+admin.site.register(DeviceUser, DeviceUserAdmin)
+admin.site.register(ManagementAddress, ManagementAddressAdmin)

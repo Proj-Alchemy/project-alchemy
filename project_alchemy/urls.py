@@ -8,6 +8,7 @@ from rest_framework import permissions
 
 from main.api import router as main_router
 
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Project Alchemy",

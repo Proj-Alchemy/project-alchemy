@@ -4,8 +4,11 @@ from rest_framework import viewsets
 
 from main.models import Device
 from main.models import DeviceLink
+from main.models import DeviceUser
+from main.models import ManagementAddress
 from main.models import TemplateFragment
 from main.models import Vendor
+from main.views import DeviceConfigViewSet
 
 
 class BaseViewSet(viewsets.ModelViewSet):
@@ -56,8 +59,35 @@ class DeviceLinkViewSet(BaseViewSet):
     serializer_class = DeviceLinkSerializer
 
 
+class DeviceUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DeviceUser
+        fields = "__all__"
+
+
+class DeviceUserViewSet(BaseViewSet):
+    queryset = DeviceUser.objects.all()
+    serializer_class = DeviceUserSerializer
+
+
+class ManagementAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManagementAddress
+        fields = "__all__"
+
+
+class ManagementAddressViewSet(BaseViewSet):
+    queryset = ManagementAddress.objects.all()
+    serializer_class = ManagementAddressSerializer
+
+
+ManagementAddress
+
 router = routers.DefaultRouter()
 router.register(r"vendor", VendorViewSet)
+router.register(r"managementaddress", ManagementAddressViewSet)
 router.register(r"template", TemplateFragmentViewSet)
 router.register(r"device", DeviceViewSet)
 router.register(r"devicelink", DeviceLinkViewSet)
+router.register(r"deviceuser", DeviceUserViewSet)
+router.register(r"config", DeviceConfigViewSet, basename="config")
