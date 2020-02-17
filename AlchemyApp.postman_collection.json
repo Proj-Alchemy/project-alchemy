@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "0614053c-c063-4cc7-a467-eb4906094489",
+		"name": "AlchemyApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "51eb92db-e8b4-444d-9891-f74d86ee4081",
+						"exec": [
+							"pm.test(\"Successful GET request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{pwd}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{user}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{serverIP}}:{{port}}/device",
+					"protocol": "http",
+					"host": [
+						"{{serverIP}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"device"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
