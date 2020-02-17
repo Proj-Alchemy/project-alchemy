@@ -1,0 +1,63 @@
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname {{ device.hostname }}
+!
+enable secret 5 ENABLESECRET
+!
+!
+ip cef
+no ipv6 cef
+!
+!  {% for user in device.users %}
+username {{ user.name }} privilege 15 password 0 {{ user.password }}
+!  {% endfor %}
+!
+!
+ip ssh version 2
+ip domain-name {{ device.domain }}
+!
+!
+spanning-tree mode pvst
+!
+!
+! {% for interface in device.interfaces %}
+interface {{ interface.name }}
+    ip address {{ interface.ipv4 }} 255.255.255.224
+! {% endfor %}
+!
+interface Vlan1
+    no ip address
+    shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+ip access-list extended alchemy_list
+    permit tcp host 172.16.16.100 host 172.16.16.1 eq telnet
+    deny tcp any any eq telnet
+    permit ip any any
+!
+!
+!
+line con 0
+    password achemy
+    login
+!
+line aux 0
+!
+line vty 0 4
+    password alchemy
+    login
+    transport input ssh
+line vty 5 15
+    password alchemy
+    login
+    transport input ssh
+!
+!
+!
+end

@@ -1,6 +1,6 @@
 system {
     host-name {{ device.hostname }};
-    domain-name DOMAINNAME;
+    domain-name {{ device.domain }};
     root-authentication {
         (encrypted-password "ROOTPASSWORD" | public-key);
         ssh-dsa "public-key";
