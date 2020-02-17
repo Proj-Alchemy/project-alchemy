@@ -21,6 +21,7 @@ django-redis = "^4.11.0"
 [tool.poetry.dev-dependencies]
 django-stubs = "^1.1.0"
 mypy = "^0.740"
+heroku = "^0.1.4"
 
 
 [build-system]
