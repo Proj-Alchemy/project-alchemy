@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "JHGFVBGFVjgvhgjvhkj,bjkjnm")
 DEBUG = True if os.getenv("NODEBUG") is None else False
 
 # TODO: Change your domain names here.
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "220.247.146.80"]
+ALLOWED_HOSTS = ["*"]
 
 # TODO: Change the default "from" email here.
 DEFAULT_FROM_EMAIL = "me@mydomain.com"
