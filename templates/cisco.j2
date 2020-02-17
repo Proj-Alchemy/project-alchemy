@@ -12,8 +12,13 @@ no ipv6 cef
 !
 !  {% for user in device.users %}
 username {{ user.name }} privilege 15 password 0 {{ user.password }}
-!  {% endfor %}
-!
+! 
+ip ssh pubkey-chain
+    username {{ user.name }}
+    key-string
+        {{ user.public_key }}
+    exit
+! {% endfor %}
 !
 ip ssh version 2
 ip domain-name {{ device.domain }}
@@ -23,7 +28,8 @@ spanning-tree mode pvst
 !
 !
 ! {% for interface in device.interfaces %}
-interface {{ interface.name }}
+interface {{ interface.port }}
+    description {{ interface.name }}
     ip address {{ interface.ipv4 }} 255.255.255.224
     ipv6 address {{ interface.ipv6 }}/64
      ip verify unicast source reachable-via any
@@ -39,8 +45,9 @@ ip classless
 ip flow-export version 9
 !
 !
-ip access-list extended alchemy_list  {% for manager in management %}
-    permit tcp host {{ manager.ipv4 }} any eq telnet  {% endfor %}
+ip access-list extended alchemy_list  {% for manager in managementaddress %}
+    description {{ manager.name }}
+    permit tcp host {{ manager.ip_address }} any eq telnet  {% endfor %}
     deny tcp any any eq telnet
     permit ip any any
 !

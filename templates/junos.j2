@@ -100,7 +100,7 @@ security {
 }
 
 interface { {% for interface in device.interfaces %}
-    interface {{ interface.name }} {
+    interface {{ interface.port }} {
         unit 0 {
             family inet {
                 ip address {{ interface.ipv4 }}/31

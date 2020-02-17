@@ -1,6 +1,8 @@
 ---
-management:
-    - ipv4: 192.168.200.200
+managementaddress:
+    - ip_address: 192.168.200.200
+      name: test
+
 
 device:
     hostname: AWESOME_HOSTNAME
@@ -10,15 +12,19 @@ device:
         - name: apple
           uid: 2001
           password: awesomepassword
+          public_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgXHTJcpmdq7ggayNm97zncPW+QbyU/PANGeEkq8q6ZwkLuIIBP06KGZm46VtUlj/8xsYvKkbOoWg5li1SPAvK/LDixKYu2K9VgG+Kvr7nV0fZd5LpQ7IO/eEP8T+6JtrkEqcHsgWSNnYrXhscqZw7yDAu/PV5HdGA86yUcpMimI4ssrxL1hXdmxqxNfmEyieuEVZTv8F2koI98YDdNK9mYx5qkVrn9+irS6i3qyTL+M0l82pr7u4adQz1U6GeG2cK5B3XW3cAmuSBwbVwyCpbGX03mdankcPvnr4fvZbdg7ADWK4YeOMhozl+XNCl9GDRIWE9e5urmY8WUfDutF67gNRaMl2m1wPzRUoniwAB+cIlupJSqnh0DfROg2g/w7zxPB5fhRf2ykvmECAA2IGMVA4KmAV4cGigAUZ4y67sQairZbfJhBc+CNiztyAZTNEByUsVMk7zdprxpNG1jzestvIq2MXEJMqpi+8rEsEidyMyV3TvxUkqU1Kl0gDM4nP2TCy71lUWik7zdi4UbHKMif60WnqcOJTTmpddRnypcYaHOs46d3y7uRgOIzCAbmaHA3E0pyzKt/jlemMynqf4hg2XeE7vp7OEpWtxH8OBiSgYYLZlmuwp1Ra602+3Enm34j6ZZ9r34/n1AIaadtodSFUSdJlFzyFP//oqWb1g0Q== nick@npratley.net'
         - name: banana
           uid: 2002
           password: otherawesomepassword
+          public_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgXHTJcpmdq7ggayNm97zncPW+QbyU/PANGeEkq8q6ZwkLuIIBP06KGZm46VtUlj/8xsYvKkbOoWg5li1SPAvK/LDixKYu2K9VgG+Kvr7nV0fZd5LpQ7IO/eEP8T+6JtrkEqcHsgWSNnYrXhscqZw7yDAu/PV5HdGA86yUcpMimI4ssrxL1hXdmxqxNfmEyieuEVZTv8F2koI98YDdNK9mYx5qkVrn9+irS6i3qyTL+M0l82pr7u4adQz1U6GeG2cK5B3XW3cAmuSBwbVwyCpbGX03mdankcPvnr4fvZbdg7ADWK4YeOMhozl+XNCl9GDRIWE9e5urmY8WUfDutF67gNRaMl2m1wPzRUoniwAB+cIlupJSqnh0DfROg2g/w7zxPB5fhRf2ykvmECAA2IGMVA4KmAV4cGigAUZ4y67sQairZbfJhBc+CNiztyAZTNEByUsVMk7zdprxpNG1jzestvIq2MXEJMqpi+8rEsEidyMyV3TvxUkqU1Kl0gDM4nP2TCy71lUWik7zdi4UbHKMif60WnqcOJTTmpddRnypcYaHOs46d3y7uRgOIzCAbmaHA3E0pyzKt/jlemMynqf4hg2XeE7vp7OEpWtxH8OBiSgYYLZlmuwp1Ra602+3Enm34j6ZZ9r34/n1AIaadtodSFUSdJlFzyFP//oqWb1g0Q== nick@npratley.net'
     
     interfaces:
-        - name: gi-0/0/0
+        - port: gi-0/0/0
+          name: test1
           ipv4: 10.0.0.1
           ipv6: 10:10:10:10::1
-        - name: gi-0/0/1
+        - port: gi-0/0/1
+          name: test2
           ipv4: 10.1.0.1
           ipv6: 10:10:10:20::1
           
