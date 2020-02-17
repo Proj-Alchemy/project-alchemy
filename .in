@@ -1,0 +1,2 @@
+OLDPATH=$PATH
+export PATH="$(poetry show -v | grep virtual | awk '{print $3}')/bin:$PATH"
