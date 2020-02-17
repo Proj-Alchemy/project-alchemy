@@ -1,6 +1,6 @@
 # Created by https://www.gitignore.io
-_static
-.mypy_cache
+_static/
+.mypy_cache/
 
 
 ### OSX ###
