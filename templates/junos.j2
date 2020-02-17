@@ -1,0 +1,92 @@
+system {
+	host-name {{ device.hostname }};
+	domain-name {{ device.domain }};
+	root-authentication {
+		(encrypted-password "ROOTPASSWORD" | public-key);
+		ssh-dsa "public-key";
+		ssh-ecdsa "public-key";
+		ssh-rsa "public-key";
+	} 
+	name-server {
+		NAMESERVER;
+	login {
+		user {
+  {% for user in device.users %}
+			{{ user.name }} {
+				uid 2001;
+				class super-user;
+				authentication {
+					(encrypted-password "{{ user.password }}" | public-key);
+				}
+			}
+  {% endfor %}
+		}
+	}
+
+	services {
+		ssh;
+		telnet;
+		xnm-clear-text;
+		web-management {
+			https {
+				system-generated-certificate;
+			}
+		}
+	}
+
+	syslog {
+		archive size 100k files 3;
+		user * any emergency;
+		file messages {
+				any critical;
+				authorization info;
+		}
+		file interactive-commands {
+				interactive-commands any;
+		}
+	}
+	max-configurations-on-flash 5;
+	max-configuration-rollbacks 5;
+}
+
+
+security {
+    screen {
+        ids-option untrust-screen {
+            icmp {
+                ping-death;
+            }
+            ip {
+                source-route-option;
+                tear-drop;
+            }
+            tcp {
+                syn-flood {
+                    alarm-threshold 1024;
+                    attack-threshold 200;
+                    source-threshold 1024;
+                    destination-threshold 2048;
+                    timeout 20;
+                }
+                land;
+            }
+        }
+    }
+}
+
+interface {
+	{% for interface in device.interfaces %}
+	interface {{ interface.name }} {
+		unit 0 {
+			family inet {
+				ip address {{ interface.ipv4 }}/31
+				ipv6 address {{ interface.ipv6 }}/64
+			}
+		}
+	}
+	{% endfor %}
+}
+
+
+
+

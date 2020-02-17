@@ -1,6 +1,6 @@
 system {
 	host-name {{HOSTNAME}};
-	domain-name DOMAIN.NAME;
+	domain-name {{DOMAINNAME}};
 	root-authentication {
 		(encrypted-password "password" | public-key);
 		ssh-dsa "public-key";

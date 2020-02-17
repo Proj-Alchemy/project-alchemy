@@ -1,6 +1,7 @@
 from jinja2 import Template
 
-var = {'HOSTNAME':'THIS_IS_A_HOSTNAME'}
+var = {'HOSTNAME':'THIS_IS_A_HOSTNAME',
+		'DOMAINNAME':'THE DOMAINNAME'}
 
 
 # Loading Template
