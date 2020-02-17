@@ -1,5 +1,5 @@
 system {
-    host-name {{ device.hostname }};
+    host-name {{ device.name }};
     domain-name {{ device.domain }};
     root-authentication {
         (encrypted-password "ROOTPASSWORD" | public-key);
